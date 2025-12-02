@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Weight, PreviousWorkouts
+from .models import CreatedWorkouts, PreviousWorkouts, Excercises
 
-admin.site.register(Weight)
+admin.site.register(CreatedWorkouts)
 admin.site.register(PreviousWorkouts)
+admin.site.register(Excercises)
