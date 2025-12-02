@@ -1,5 +1,32 @@
-{% extends 'main.html' %}
-
-{% block content %}
-<h1 class="cig">homepage</h1>
+{% extends 'main.html' %} {% block content %}
+<div class="header">
+    Hi xy! Üdvözlünk az Edzésnaplóban 💪
+  </div>
+  <div class="centered-main-bg">
+    <div class="centered-main-content">
+      <div class="main-flex">
+        <div class="main-side">
+          <div class="card">
+            <span class="card-title">Edzés indítása</span>
+            <button class="btn disabled" disabled>Indítás</button>
+          </div>
+        </div>
+        <div class="main-side">
+          <div class="card">
+            <span class="card-title">Edzésterv készítése</span>
+            <button class="btn enabled" enabled>Készítés</button>
+          </div>
+          <div class="card">
+            <span class="card-title">Saját edzéseim</span>
+            <button class="btn enabled" enabled>Megnyitás</button>
+          </div>
+          <div class="card">
+            <span class="card-title">Előző edzéseim</span>
+            <button class="btn disabled" disabled>Megtekintés</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 {% endblock %}

@@ -4,4 +4,7 @@ from django.http import HttpResponse
 
 
 def loginpage(request):
-    return HttpResponse("loginpage")
+    return render(request, "loginpage.html")
+
+def registerpage(request):
+    return render(request, "registerpage.html")
