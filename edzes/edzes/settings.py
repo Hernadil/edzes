@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     "authentication",
-    'workout'
+    'workout',
+    'editor'
 ]
 
 MIDDLEWARE = [

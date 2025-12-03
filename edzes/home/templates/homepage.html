@@ -3,8 +3,8 @@
     <div class="topbar-inner">
       <div class="brand" style="color: white;">Edzésnapló</div>
       <nav class="topnav" aria-label="Felső menü">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="#" class="nav-link">Log out</a>
+        <a href="{% url 'home' %}" class="nav-link">Home</a>
+        <a href="{% url 'logout' %}" class="nav-link">Log out</a>
       </nav>
     </div>
   </header>
@@ -17,7 +17,6 @@
         <div class="left-col">
           <div class="card big">
             <h1 class="card-title">Mai edzés</h1>
-            <p class="muted">Nincs típusmegadás</p>
 
             <div class="card-body">
               <button class="btn start fullwidth">Edzés indítása</button>
@@ -35,7 +34,7 @@
             <div class="card small">
               <div class="small-left">
                 <h3 class="small-title">Edzésterv készítése</h3>
-                <p class="muted tiny">Tervezd meg a heti rutinodat</p>
+                <p class="muted tiny">Tervezd meg a megfelelő edzésedet</p>
               </div>
               <div class="small-action">
                 <button class="btn">Készítés</button>

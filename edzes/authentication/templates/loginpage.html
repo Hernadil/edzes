@@ -1,10 +1,11 @@
 {% extends 'main.html' %} {% block content %}
 
-
+  
   <main class="login-container">
     <form class="form-card" action="#" method="post" novalidate>
+      {% csrf_token %}
       <h2>Bejelentkezés</h2>
-
+      <h3>{{ error }}</h3>
       <div class="input-group">
         <label class="input-label" for="username">Felhasználónév</label>
         <input id="username" name="username" class="input-field" type="text" autocomplete="username" required>
