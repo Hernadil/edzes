@@ -1,32 +1,59 @@
 {% extends 'main.html' %} {% block content %}
-<div class="header">
-    Hi xy! Üdvözlünk az Edzésnaplóban 💪
-  </div>
-  <div class="centered-main-bg">
-    <div class="centered-main-content">
-      <div class="main-flex">
-        <div class="main-side">
-          <div class="card">
-            <span class="card-title">Edzés indítása</span>
-            <button class="btn disabled" disabled>Indítás</button>
-          </div>
-        </div>
-        <div class="main-side">
-          <div class="card">
-            <span class="card-title">Edzésterv készítése</span>
-            <button class="btn enabled" enabled>Készítés</button>
-          </div>
-          <div class="card">
-            <span class="card-title">Saját edzéseim</span>
-            <button class="btn enabled" enabled>Megnyitás</button>
-          </div>
-          <div class="card">
-            <span class="card-title">Előző edzéseim</span>
-            <button class="btn disabled" disabled>Megtekintés</button>
-          </div>
-        </div>
-      </div>
+<header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand" style="color: white;">Edzésnapló</div>
+      <nav class="topnav" aria-label="Felső menü">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Log out</a>
+      </nav>
     </div>
-  </div>
-</body>
+  </header>
+
+  <main class="page-wrap">
+    <!-- Nagy, középre helyezett, sötét, modern panel -->
+    <section class="home-panel">
+      <div class="home-grid">
+        <!-- Bal oldal: mai edzés -->
+        <div class="left-col">
+          <div class="card big">
+            <h1 class="card-title">Mai edzés</h1>
+            <p class="muted">Nincs típusmegadás</p>
+
+            <div class="card-body">
+              <button class="btn start fullwidth">Edzés indítása</button>
+            </div>
+
+            <div class="card-footer muted small">Kezdés után rögzítheted a sorozatokat és időket.</div>
+          </div>
+        </div>
+
+        <!-- Jobb oldal: korábbi edzések + egyéb -->
+        <aside class="right-col">
+          <button class="pill-btn fullwidth">Korábbi edzések megtekintése</button>
+
+          <div class="stack-cards">
+            <div class="card small">
+              <div class="small-left">
+                <h3 class="small-title">Edzésterv készítése</h3>
+                <p class="muted tiny">Tervezd meg a heti rutinodat</p>
+              </div>
+              <div class="small-action">
+                <button class="btn">Készítés</button>
+              </div>
+            </div>
+
+            <div class="card small">
+              <div class="small-left">
+                <h3 class="small-title">Saját edzésterveim</h3>
+                <p class="muted tiny">Mentett, személyes edzéseid</p>
+              </div>
+              <div class="small-action">
+                <button class="btn">Megnyitás</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
 {% endblock %}

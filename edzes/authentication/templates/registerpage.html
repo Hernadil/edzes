@@ -1,55 +1,35 @@
 {% extends 'main.html' %} {% block content %}
-<div class="register-container">
-  <form class="form-card">
-    <h2>Regisztráció</h2>
-    <div class="input-group">
-      <label class="input-label" for="fullname">Teljes név</label>
-      <input
-        type="text"
-        class="input-field"
-        id="fullname"
-        name="fullname"
-        autocomplete="name"
-        required
-      />
-    </div>
-    <div class="input-group">
-      <label class="input-label" for="reg-username">Felhasználónév</label>
-      <input
-        type="text"
-        class="input-field"
-        id="reg-username"
-        name="reg-username"
-        autocomplete="username"
-        required
-      />
-    </div>
-    <div class="input-group">
-      <label class="input-label" for="reg-password">Jelszó</label>
-      <input
-        type="password"
-        class="input-field"
-        id="reg-password"
-        name="reg-password"
-        autocomplete="new-password"
-        required
-      />
-    </div>
-    <div class="input-group">
-      <label class="input-label" for="reg-password2">Jelszó újra</label>
-      <input
-        type="password"
-        class="input-field"
-        id="reg-password2"
-        name="reg-password2"
-        autocomplete="new-password"
-        required
-      />
-    </div>
-    <button type="submit" class="btn form-btn">Regisztráció</button>
-    <div class="form-links">
-      <a href="{% url 'login' %}">Már van fiókom</a>
-    </div>
-  </form>
-</div>
+
+
+  <main class="register-container">
+    <form class="form-card" action="#" method="post" novalidate>
+      <h2>Regisztráció</h2>
+
+      <div class="input-group">
+        <label class="input-label" for="fullname">Teljes név</label>
+        <input id="fullname" name="fullname" class="input-field" type="text" autocomplete="name" required>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="reg-username">Felhasználónév</label>
+        <input id="reg-username" name="reg-username" class="input-field" type="text" autocomplete="username" required>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="reg-password">Jelszó</label>
+        <input id="reg-password" name="reg-password" class="input-field" type="password" autocomplete="new-password" required>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="reg-password2">Jelszó újra</label>
+        <input id="reg-password2" name="reg-password2" class="input-field" type="password" autocomplete="new-password" required>
+      </div>
+
+      <button type="submit" class="btn form-btn">Regisztráció</button>
+
+      <div class="form-links">
+        <a href="{% url 'login' %}">Már van fiókom — Bejelentkezés</a>
+      </div>
+    </form>
+  </main>
 {% endblock %}

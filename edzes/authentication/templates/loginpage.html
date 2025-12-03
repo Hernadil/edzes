@@ -1,33 +1,25 @@
 {% extends 'main.html' %} {% block content %}
-<div class="login-container">
-  <form class="form-card">
-    <h2>Bejelentkezés</h2>
-    <div class="input-group">
-      <label class="input-label" for="username">Felhasználónév</label>
-      <input
-        type="text"
-        class="input-field"
-        id="username"
-        name="username"
-        autocomplete="username"
-        required
-      />
-    </div>
-    <div class="input-group">
-      <label class="input-label" for="password">Jelszó</label>
-      <input
-        type="password"
-        class="input-field"
-        id="password"
-        name="password"
-        autocomplete="current-password"
-        required
-      />
-    </div>
-    <button type="submit" class="btn form-btn">Bejelentkezés</button>
-    <div class="form-links">
-      <a href="{% url 'register' %}">Regisztráció</a>
-    </div>
-  </form>
-</div>
+
+
+  <main class="login-container">
+    <form class="form-card" action="#" method="post" novalidate>
+      <h2>Bejelentkezés</h2>
+
+      <div class="input-group">
+        <label class="input-label" for="username">Felhasználónév</label>
+        <input id="username" name="username" class="input-field" type="text" autocomplete="username" required>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="password">Jelszó</label>
+        <input id="password" name="password" class="input-field" type="password" autocomplete="current-password" required>
+      </div>
+
+      <button type="submit" class="btn form-btn">Bejelentkezés</button>
+
+      <div class="form-links">
+        <a href="{% url 'register' %}">Nincs fiókom — Regisztráció</a>
+      </div>
+    </form>
+  </main>
 {% endblock %}

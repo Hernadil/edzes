@@ -1,271 +1,269 @@
-:root {
-  --primary-bg: #181818;
-  --dark-bg: #111113;
-  --card-bg: #232324;
-  --accent: #ba1a1a;
-  --accent-hover: #a91414;
-  --disabled: #555;
-  --text-primary: #fff;
-  --text-secondary: #c7c7c7;
-  --border-radius: 1rem;
-  --shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.6);
+:root{
+  /* Sötétebb, modernebb alapszínek; piros kissé halkítva */
+  --bg: #0b0b0b;
+  --panel-dark: #0f0f10;
+  --panel-mid: #1a1515;
+  --card-bg: #121212;
+  --accent: #9e1b1b;
+  --accent-2: #c43a3a;
+  --accent-hover: #841111;
+  --muted: #9b9b9b;
+  --white: #f7f7f7;
+  --radius: 16px;
+  --shadow-lg: 0 18px 60px rgba(0,0,0,0.7);
+  --shadow-md: 0 10px 30px rgba(0,0,0,0.6);
 }
 
-body {
-  background: var(--primary-bg);
-  color: var(--text-primary);
-  min-height: 100vh;
-  font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  margin: 0;
+/* RESET / ALAPOK */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 400px at 10% 10%, rgba(255,255,255,0.01), transparent 6%),
+    linear-gradient(180deg, #070707 0%, var(--bg) 40%);
+  color:var(--white);
+  font-family: "Montserrat", "Inter", Arial, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.4;
 }
 
-.header {
-  font-size: 2rem;
-  font-weight: 700;
-  background: var(--dark-bg);
-  padding: 2rem 0 1rem 0;
-  text-align: center;
-  letter-spacing: 0.06em;
-  box-shadow: var(--shadow);
+/* TOPBAR (keskeny, modern) */
+.topbar{
+  background: linear-gradient(180deg, rgba(158,27,27,0.98), rgba(120,10,10,0.95));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+.topbar-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:10px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brand{
+  font-weight:900;
+  color:#110606;
+  font-size:1.45rem;
+  letter-spacing:0.02em;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.02);
+}
+.topnav{display:flex;gap:16px;align-items:center}
+.topnav .nav-link{
+  color:var(--white);
+  text-decoration:none;
+  font-weight:700;
+  opacity:0.95;
+  padding:6px 10px;
+  border-radius:8px;
+}
+.topnav .nav-link:visited{ color:var(--white); }
+@media (hover:hover){
+  .topnav .nav-link:hover{ opacity:0.9; background: rgba(255,255,255,0.02); }
 }
 
-/* FŐOLDAL ÚJ DESIGN */
-.centered-main-bg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 78vh;
-  width: 100vw;
-  margin: 0;
-  background: linear-gradient(120deg, #161519 58%, #232324 100%);
-  /* háttér a nagy 'kártya' alatt, a body alatt sötétebb marad */
+/* FŐ TARTALOM (középre igazítás) */
+.page-wrap{
+  min-height: calc(100vh - 56px);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:34px 20px 80px;
 }
 
-.centered-main-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem 2rem;
-  width: 100%;
-  max-width: 980px; /* keskenyebb design, hogy ne legyen túl széles */
+/* HOME PANEL: nagy, modern, sötét kártya */
+.home-panel{
+  width:100%;
+  max-width:1200px;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+.home-grid{
+  width:100%;
+  display:grid;
+  grid-template-columns: 1fr 380px;
+  gap:28px;
 }
 
-.main-flex {
-  display: flex;
-  gap: 2.5rem;
-  width: 100%;
-  justify-content: center;
+/* BAL OSZLOP - nagy card */
+.left-col{ display:flex; align-items:flex-start; justify-content:center; }
+.card{
+  background: linear-gradient(180deg, rgba(22,22,22,0.9), rgba(14,12,12,0.85));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255,255,255,0.02);
+  color:var(--white);
+}
+.card.big{
+  width:100%;
+  padding:36px;
+  text-align:center;
+}
+.card-title{
+  margin:0;
+  font-size:2rem;
+  font-weight:900;
+  color:var(--accent-2);
+  letter-spacing:0.02em;
+}
+.muted{ color:var(--muted); margin-top:10px; margin-bottom:18px; }
+.small{ font-size:0.9rem; color:var(--muted); margin-top:12px; }
+
+/* Jobb oszlop */
+.right-col{ display:flex; flex-direction:column; gap:18px; align-items:stretch; }
+
+/* Nagy pill-szerű gomb a korábbi edzésekhez */
+.pill-btn{
+  display:inline-block;
+  width:100%;
+  padding:18px 20px;
+  border-radius:999px;
+  border:none;
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+  color:var(--white);
+  font-weight:900;
+  font-size:1rem;
+  box-shadow: 0 18px 50px rgba(150,20,20,0.12), 0 6px 18px rgba(0,0,0,0.6);
+  cursor:pointer;
+  transition: transform .12s, box-shadow .12s;
+}
+@media (hover:hover){
+  .pill-btn:hover{ transform: translateY(-3px); box-shadow: 0 24px 60px rgba(150,20,20,0.18); }
 }
 
-.main-side {
-  display: flex;
-  flex-direction: column;
-  gap: 1.7rem;
-  align-items: center;
-  min-width: 220px;
-  width: 100%;
+/* Kisebb stacked kártyák (right column) */
+.stack-cards{ display:flex; flex-direction:column; gap:12px; }
+.card.small{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  gap:12px;
+  border-radius:12px;
+  background: linear-gradient(180deg, rgba(18,18,18,0.95), rgba(22,16,16,0.9));
+  box-shadow: 0 8px 28px rgba(0,0,0,0.55);
 }
+.small-left{ text-align:left; }
+.small-title{ margin:0; font-size:1rem; font-weight:800; color:var(--white); }
+.tiny{ font-size:0.85rem; color:var(--muted); margin-top:6px; }
 
-.card {
-  background: var(--card-bg);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  min-width: 210px;
-  max-width: 340px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2.2rem 1rem 2rem 1rem;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-
-@media (hover: hover) {
-  .card:not(.disabled):hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 8px 36px 0 rgba(186, 26, 26, 0.2), var(--shadow);
-  }
-}
-
-.card-title {
-  margin-bottom: 1.5rem;
-  font-size: 1.25rem;
-  font-weight: 500;
-}
-
-.btn {
-  padding: 0.85rem 2.2rem;
-  font-size: 1.03rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 999px;
+/* GOMBOK - általános */
+.btn{
   background: var(--accent);
-  color: var(--text-primary);
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  transition: background 0.13s, color 0.14s, box-shadow 0.14s;
-  outline: none;
-  margin-top: 0.5rem;
+  color:var(--white);
+  border:none;
+  padding:10px 18px;
+  border-radius:12px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow: 0 10px 28px rgba(150,20,20,0.12);
+  transition: background .12s, transform .12s;
+}
+@media (hover:hover){
+  .btn:hover{ background: var(--accent-hover); transform: translateY(-2px); }
 }
 
-@media (hover: hover) {
-  .btn:not(:disabled):hover {
-    background: var(--accent-hover);
-    box-shadow: 0 8px 36px 0 rgba(186, 26, 26, 0.31), var(--shadow);
-    color: #fff;
-  }
+/* Teljes szélességű gomb variáns */
+.fullwidth{ width:100%; display:inline-block; }
+
+/* START gomb kicsit nagyobb */
+.start{ padding:14px 22px; font-size:1.02rem; border-radius:12px; font-weight:900; }
+
+/* RESZPONZÍV: mobilon egymás alá rendezés, sötétebb, nagy terek */
+@media (max-width:980px){
+  .home-grid{ grid-template-columns: 1fr; }
+  .left-col, .right-col{ width:100%; }
+  .card.big{ padding:28px; }
+  .page-wrap{ padding:20px; }
 }
 
-.btn.disabled,
-.btn:disabled {
-  background: var(--disabled);
-  color: #bbbbbb;
-  box-shadow: none;
-  cursor: not-allowed;
+/* kisebb mobil finomítás */
+@media (max-width:420px){
+  .card-title{ font-size:1.45rem; }
+  .pill-btn{ padding:14px; font-size:0.95rem; }
+  .card.big{ padding:18px; border-radius:12px; }
 }
 
-.card.disabled {
-  opacity: 0.6;
-  filter: grayscale(0.2);
-  pointer-events: none;
-}
+/* --- A LOGIN és REGISTER stílusai változatlanul bent maradnak --- */
+/* (középre igazított formák, ugyanezeket nem módosítottuk) */
 
-@media screen and (max-width: 900px) {
-  .main-flex {
-    gap: 1.4rem;
-  }
-  .centered-main-bg {
-    padding: 0.7rem 0;
-  }
-  .centered-main-content {
-    padding: 0.5rem 0;
-  }
-}
-
-/* MOBILE FLEX: egymás alatt legyenek a main-side-os kártyák */
-@media screen and (max-width: 690px) {
-  .main-flex {
-    flex-direction: column;
-    gap: 1.4rem;
-    align-items: center;
-  }
-  .centered-main-bg {
-    min-height: 89vh;
-    padding: 0;
-  }
-  .centered-main-content {
-    padding: 0.4rem 0;
-  }
-  .main-side {
-    min-width: 0;
-  }
-}
-
-/* FORMOK design: login/register */
-.login-container,
-.register-container {
-  min-height: 85vh;
+.login-container, .register-container {
+  min-height: calc(100vh - 64px);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
 
 .form-card {
-  background: linear-gradient(120deg, var(--dark-bg) 60%, var(--card-bg) 100%);
-  border-radius: var(--border-radius);
-  padding: 2.5rem 2rem 2rem 2rem;
-  box-shadow: var(--shadow);
+  background: linear-gradient(120deg, var(--panel-dark) 60%, var(--card-bg) 100%);
+  border-radius: 14px;
+  padding: 28px 22px;
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 300px;
   width: 100%;
-  max-width: 360px;
-  animation: fadeinup 0.5s;
+  max-width: 420px;
+  animation: fadeinup 0.45s;
+  text-align: center;
 }
-
 @keyframes fadeinup {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0%{opacity:0; transform:translateY(18px)}
+  100%{opacity:1; transform:translateY(0)}
 }
-
 .form-card h2 {
   font-size: 1.45rem;
-  color: var(--accent);
-  font-weight: 700;
-  margin-bottom: 2rem;
+  color: var(--accent-2);
+  font-weight: 800;
+  margin-bottom: 18px;
 }
-
-.input-group {
-  margin-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+.input-group{ width:100%; margin-bottom:16px; display:flex; flex-direction:column; align-items:flex-start; }
+.input-label{ color:var(--muted); font-size:0.98rem; margin-bottom:6px; }
+.input-field{
+  width:100%;
+  padding:12px 14px;
+  border-radius:999px;
+  border:none;
+  background:#222225;
+  color:var(--white);
+  font-size:1rem;
+  box-shadow: 0 2px 14px rgba(0,0,0,0.2);
+  outline:none;
+  transition: background .14s, box-shadow .12s;
 }
+.input-field:focus{ background:#2b2b31; box-shadow: 0 4px 18px rgba(0,0,0,0.28); }
 
-.input-label {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  margin-bottom: 0.4rem;
-  letter-spacing: 0.05em;
-}
-
-.input-field {
-  padding: 0.78rem 1.1rem;
+/* gombok a formokban */
+.form-btn, .btn {
+  width:100%;
+  margin-top:8px;
+  background: var(--accent);
+  color:var(--white);
+  border:none;
+  padding:12px 16px;
   border-radius: 999px;
-  border: none;
-  background: #222225;
-  color: #fff;
-  font-size: 1.04rem;
-  font-weight: 500;
-  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
-  outline: none;
-  margin-bottom: 0.05em;
-  transition: background 0.14s;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow: 0 10px 24px rgba(150,20,20,0.12);
+  transition: background .12s, transform .12s;
+}
+@media (hover:hover){
+  .form-btn:hover{ background:var(--accent-hover); transform: translateY(-2px); }
+}
+.form-links{ margin-top:12px; display:flex; justify-content:center; width:100%; }
+.form-links a{ color:var(--accent-2); text-decoration:none; font-weight:700; }
+@media (hover:hover){
+  .form-links a:hover{ color:var(--accent-hover); text-decoration:underline; }
 }
 
-.input-field:focus {
-  background: #2b2b31;
-}
-
-.form-btn {
-  margin-top: 0.3rem;
-  width: 100%;
-}
-
-.form-links {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.6rem;
-  gap: 1.4rem;
-  font-size: 0.97rem;
-  color: var(--text-secondary);
-}
-
-.form-links a {
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.18s;
-}
-
-@media (hover: hover) {
-  .form-links a:hover {
-    color: #e62727;
-    text-decoration: underline;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  .form-card {
-    min-width: 0;
-    padding: 1.5rem 0.7rem;
-    max-width: 100vw;
-  }
+/* kis mobil finomítás */
+@media (max-width:420px){
+  .form-card{ padding:18px 12px; max-width:100%; border-radius:12px; }
+  .form-card h2{ font-size:1.25rem; }
+  .input-field{ padding:10px 12px; }
 }
