@@ -1,0 +1,23 @@
+{% extends 'main.html' %} {% block content %}
+
+
+<main class="page-wrap">
+  <section class="home-panel">
+    <div class="workouts-container" style="display: flex; flex-direction: column; gap: 24px; width: 100%; max-width: 900px; margin: 0 auto; padding: 0 20px;">
+      {% for workout in workouts %}
+      <div class="card big" style="width: 100%; min-height: 140px; padding: 28px; text-align: center;">
+        <div class="card-body" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+          <h3 class="card-subtitle">{{ workout.name }}</h3>
+          <div class="card-divider"></div>
+          <p class="card-username">Készítő: {{ workout.userid.username }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <p class="muted">Nincs elérhető edzés.</p>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+
+{% endblock %}
+

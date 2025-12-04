@@ -1,14 +1,4 @@
 {% extends 'main.html' %} {% block content %}
-<header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand" style="color: white;">Edzésnapló</div>
-      <nav class="topnav" aria-label="Felső menü">
-        <a href="{% url 'home' %}" class="nav-link">Home</a>
-        <a href="{% url 'logout' %}" class="nav-link">Log out</a>
-      </nav>
-    </div>
-  </header>
-
   <main class="page-wrap">
     <!-- Nagy, középre helyezett, sötét, modern panel -->
     <section class="home-panel">
@@ -19,16 +9,18 @@
             <h1 class="card-title">Mai edzés</h1>
 
             <div class="card-body">
-              <button class="btn start fullwidth">Edzés indítása</button>
+              {% if all %}
+              <a href="{% url 'workout_home' %}"><button class="btn start">Edzés indítása</button></a>
+              {% else %}
+              <p class="muted">Még senki nem hozott létre edzéstervet. Legyél te az első! Kattints a <b style="color: rgb(207, 207, 207);">Készítés</b> gombra! </p>
+              {% endif %}
             </div>
-
-            <div class="card-footer muted small">Kezdés után rögzítheted a sorozatokat és időket.</div>
           </div>
         </div>
 
         <!-- Jobb oldal: korábbi edzések + egyéb -->
         <aside class="right-col">
-          <button class="pill-btn fullwidth">Korábbi edzések megtekintése</button>
+          <button class="pill-btn fullwidth">Naplózott edzések megtekintése</button>
 
           <div class="stack-cards">
             <div class="card small">
@@ -41,6 +33,7 @@
               </div>
             </div>
 
+            {% if my %}
             <div class="card small">
               <div class="small-left">
                 <h3 class="small-title">Saját edzésterveim</h3>
@@ -50,6 +43,7 @@
                 <button class="btn">Megnyitás</button>
               </div>
             </div>
+            {% endif %}
           </div>
         </aside>
       </div>
