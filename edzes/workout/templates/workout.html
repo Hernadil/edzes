@@ -1,0 +1,223 @@
+{% extends 'main.html' %} {% block content %}
+
+<main class="page-wrap">
+  <section class="home-panel">
+    <div
+      class="workout-session"
+      style="max-width: 900px; margin: 0 auto; padding: 20px"
+    >
+      <!-- Időmérő -->
+      <div
+        class="card big"
+        style="text-align: center; margin-bottom: 24px; padding: 32px"
+      >
+        <h2 style="margin: 0 0 16px 0; color: var(--white)">Edzésidő</h2>
+        <div
+          style="
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 16px;
+          "
+          id="timer"
+        >
+          00:00
+        </div>
+        <input type="hidden" id="elapsed-minutes" value="0" />
+      </div>
+
+      <!-- Gyakorlatok táblázat -->
+      <form method="post" action="{% url 'start' workout_id=workout_id %}">
+        {% csrf_token %}
+        <input type="hidden" name="elapsed_time" id="elapsed-time-input" />
+
+        <div class="card big" style="padding: 32px">
+          <h2 style="margin: 0 0 24px 0; color: var(--white)">Gyakorlatok</h2>
+
+          <div class="exercises-table" style="width: 100%; overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse">
+              <thead>
+                <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1)">
+                  <th
+                    style="
+                      padding: 16px;
+                      text-align: left;
+                      color: var(--muted);
+                      font-weight: 700;
+                      font-size: 0.9rem;
+                    "
+                  >
+                    Gyakorlat
+                  </th>
+                  <th
+                    style="
+                      padding: 16px;
+                      text-align: center;
+                      color: var(--muted);
+                      font-weight: 700;
+                      font-size: 0.9rem;
+                    "
+                  >
+                    Ismétlések
+                  </th>
+                  <th
+                    style="
+                      padding: 16px;
+                      text-align: center;
+                      color: var(--muted);
+                      font-weight: 700;
+                      font-size: 0.9rem;
+                    "
+                  >
+                    Jelenlegi súly (kg)
+                  </th>
+                  <th
+                    style="
+                      padding: 16px;
+                      text-align: center;
+                      color: var(--muted);
+                      font-weight: 700;
+                      font-size: 0.9rem;
+                    "
+                  >
+                    Új súly (kg)
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for excercise in excercises %} {% for weight in weights %}
+                {% if weight.excerciseid.id == excercise.id %}
+                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05)">
+                  <td
+                    data-label=""
+                    style="
+                      padding: 20px;
+                      color: var(--white);
+                      font-weight: 600;
+                      font-size: 1.1rem;
+                    "
+                  >
+                    {{ excercise.name }}
+                  </td>
+                  <td
+                    data-label="Ismétlések"
+                    style="
+                      padding: 20px;
+                      text-align: center;
+                      color: var(--white);
+                      font-size: 1rem;
+                    "
+                  >
+                    {{ excercise.reps }}
+                  </td>
+                  <td
+                    data-label="Jelenlegi súly"
+                    style="
+                      padding: 20px;
+                      text-align: center;
+                      color: var(--accent);
+                      font-weight: 700;
+                      font-size: 1.1rem;
+                    "
+                  >
+                    {{ weight.weight }}
+                  </td>
+                  <td
+                    data-label="Új súly (kg)"
+                    style="padding: 20px; text-align: center"
+                  >
+                    <input
+                      type="number"
+                      name="new_weight_{{ excercise.id }}"
+                      value="{{ weight.weight }}"
+                      min="0"
+                      step="0.5"
+                      style="
+                        width: 80px;
+                        padding: 8px 12px;
+                        background: rgba(255, 255, 255, 0.05);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        border-radius: 8px;
+                        color: var(--white);
+                        text-align: center;
+                        font-size: 1rem;
+                        font-weight: 600;
+                      "
+                    />
+                  </td>
+                </tr>
+                {% endif %} {% endfor %} {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 8px;">
+            <label for="notes" style="color: var(--muted); font-weight: 700;">Megjegyzés</label>
+            <input
+              id="notes"
+              name="notes"
+              type="text"
+              placeholder="Ide írhatsz megjegyzést..."
+              style="
+                width: 100%;
+                padding: 10px 14px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                color: var(--white);
+                font-size: 1rem;
+              "
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn form-btn"
+            style="margin-top: 32px; width: 100%"
+          >
+            Edzés befejezése
+          </button>
+        </div>
+        <div style="text-align: center; margin-top: 24px;">
+          <button
+            type="submit"
+            name="action"
+            value="back_home"
+            class="btn form-btn"
+            style="width: 100%; max-width: 300px; margin: 0 auto;"
+          >
+            Vissza a főoldalra
+          </button>
+        </div>  
+        
+      </form>
+      
+
+      
+    </div>
+  </section>
+</main>
+
+<script>
+  let startTime = Date.now();
+  let timerInterval;
+
+  function updateTimer() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const minutes = Math.floor(elapsed / 60);
+    const seconds = elapsed % 60;
+
+    document.getElementById("timer").textContent = `${String(minutes).padStart(
+      2,
+      "0"
+    )}:${String(seconds).padStart(2, "0")}`;
+
+    document.getElementById("elapsed-minutes").value = minutes;
+    document.getElementById("elapsed-time-input").value = minutes;
+  }
+
+  timerInterval = setInterval(updateTimer, 1000);
+  updateTimer();
+</script>
+
+{% endblock %}

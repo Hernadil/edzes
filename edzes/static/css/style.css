@@ -269,3 +269,207 @@ body{
 }
 
 /* ...existing code... */
+.workout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.timer-card {
+  background: linear-gradient(135deg, rgba(40,40,45,0.95), rgba(30,30,35,0.95));
+}
+
+.timer-display {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--accent);
+  margin: 20px 0;
+  text-shadow: 0 0 20px rgba(255,80,80,0.3);
+}
+
+.workout-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: background 0.2s ease;
+}
+
+.table-row:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.table-cell {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: var(--white);
+}
+
+.table-header .table-cell {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ...existing code... */
+
+/* RESPONSIVE: Edzés oldal mobilra optimalizálva */
+@media (max-width: 768px) {
+  .workout-session {
+    padding: 12px !important;
+    max-width: 100% !important;
+  }
+
+  .card.big {
+    padding: 20px !important;
+    border-radius: 12px;
+  }
+
+  /* Időmérő mobilon */
+  .card.big h2 {
+    font-size: 1.3rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  #timer {
+    font-size: 2.2rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Táblázat mobilon: függőleges elrendezés */
+  .exercises-table {
+    overflow-x: visible !important;
+  }
+
+  .exercises-table table {
+    display: block;
+  }
+
+  .exercises-table thead {
+    display: none; /* Fejléc elrejtése mobilon */
+  }
+
+  .exercises-table tbody {
+    display: block;
+  }
+
+  .exercises-table tr {
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px !important;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .exercises-table td {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 8px 0 !important;
+    border: none !important;
+    text-align: left !important;
+  }
+
+  .exercises-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Gyakorlat neve */
+  .exercises-table td:nth-child(1) {
+    font-size: 1.2rem !important;
+    font-weight: 800 !important;
+    padding-bottom: 12px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .exercises-table td:nth-child(1)::before {
+    content: '';
+  }
+
+  /* Ismétlések */
+  .exercises-table td:nth-child(2)::before {
+    content: 'Ismétlések:';
+  }
+
+  /* Jelenlegi súly */
+  .exercises-table td:nth-child(3)::before {
+    content: 'Jelenlegi súly:';
+  }
+
+  /* Új súly input */
+  .exercises-table td:nth-child(4) {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px;
+  }
+
+  .exercises-table td:nth-child(4)::before {
+    content: 'Új súly (kg):';
+  }
+
+  .exercises-table input[type="number"] {
+    width: 100% !important;
+    padding: 10px 14px !important;
+    font-size: 1.1rem !important;
+  }
+
+  /* Befejezés gomb */
+  .form-btn {
+    padding: 14px !important;
+    font-size: 1.1rem !important;
+    margin-top: 20px !important;
+  }
+
+  /* Vissza link */
+  .form-links {
+    margin-top: 16px !important;
+  }
+}
+
+/* Nagyon kis mobilok (< 400px) */
+@media (max-width: 400px) {
+  #timer {
+    font-size: 1.8rem !important;
+  }
+
+  .exercises-table tr {
+    padding: 12px !important;
+  }
+
+  .exercises-table td:nth-child(1) {
+    font-size: 1.1rem !important;
+  }
+}

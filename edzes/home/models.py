@@ -14,9 +14,13 @@ class CreatedWorkouts(models.Model):
     name = models.CharField(max_length=50)
 
 class Excercises(models.Model):
-    userid = models.ForeignKey(User, on_delete=models.CASCADE)
     workoutid = models.ForeignKey(CreatedWorkouts, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     sets = models.IntegerField()
     reps = models.IntegerField()
-    weight = models.FloatField()
+
+class Weights(models.Model):
+    workoutid = models.ForeignKey(CreatedWorkouts, on_delete=models.CASCADE)
+    userid = models.ForeignKey(User, on_delete=models.CASCADE)
+    excerciseid = models.ForeignKey(Excercises, on_delete=models.CASCADE)
+    weight = models.IntegerField()
