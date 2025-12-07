@@ -20,8 +20,8 @@
 
         <!-- Jobb oldal: korábbi edzések + egyéb -->
         <aside class="right-col">
-          <button class="pill-btn fullwidth">Naplózott edzések megtekintése</button>
-
+          <button onclick="window.location.href='{% url 'previous' %}'" class="pill-btn fullwidth">Naplózott edzések megtekintése</button>
+          
           <div class="stack-cards">
             <div class="card small">
               <div class="small-left">
@@ -40,7 +40,7 @@
                 <p class="muted tiny">Mentett, személyes edzéseid</p>
               </div>
               <div class="small-action">
-                <button class="btn">Megnyitás</button>
+                <a href="{% url 'choose' %}"><button class="btn">Megnyitás</button></a>
               </div>
             </div>
             {% endif %}

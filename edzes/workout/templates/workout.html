@@ -157,7 +157,7 @@
               id="notes"
               name="notes"
               type="text"
-              placeholder="Ide írhatsz megjegyzést..."
+              placeholder="{{ comment }}"
               style="
                 width: 100%;
                 padding: 10px 14px;
@@ -199,7 +199,11 @@
 </main>
 
 <script>
-  let startTime = Date.now();
+  // Django változóból mentett idő (percben) - biztonságos parseInt
+  let savedMinutes = parseInt("{{ timer|default:'0' }}") || 0;
+  
+  // Számold vissza a startTime-ot, hogy onnan induljon
+  let startTime = Date.now() - (savedMinutes * 60 * 1000);
   let timerInterval;
 
   function updateTimer() {

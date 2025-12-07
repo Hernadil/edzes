@@ -1,0 +1,48 @@
+{% extends 'main.html' %} {% block content %}
+
+<main class="page-wrap">
+  <section class="home-panel">
+    <div class="workouts-container" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px;">
+      <h2 style="color: var(--white); margin-bottom: 24px;">Előző edzések</h2>
+      
+      {% for workout in previous_workouts %}
+      <form method="post" action="{% url 'previous' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="load_workout">
+        <input type="hidden" name="workout_type_id" value="{{ workout.workout_type.id }}">
+        <input type="hidden" name="is_active" value="true">
+        <input type="hidden" name="save_id" value="{{ workout.id }}">
+        
+        <button type="submit" class="card big" style="width: 100%; min-height: 140px; padding: 28px; text-align: center; border: none; background: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+          <div class="card-body" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+            <h3 class="card-subtitle" style="margin: 0 0 8px 0;">{{ workout.workout.name }}</h3>
+            
+            <div class="card-divider" style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); margin: 12px 0; width: 100%;"></div>
+            
+            <div style="display: flex; gap: 24px; width: 100%; justify-content: center; flex-wrap: wrap; margin-bottom: 12px;">
+              <div style="text-align: center;">
+                <p style="margin: 0; color: var(--muted); font-size: 0.9rem; font-weight: 600;">Idő</p>
+                <p style="margin: 4px 0 0 0; color: var(--accent); font-size: 1.2rem; font-weight: 900;">{{ workout.timer }} perc</p>
+              </div>
+              <div style="text-align: center;">
+                <p style="margin: 0; color: var(--muted); font-size: 0.9rem; font-weight: 600;">Készítő</p>
+                <p style="margin: 4px 0 0 0; color: var(--white); font-size: 1.1rem; font-weight: 700;">{{ workout.userid.username }}</p>
+              </div>
+            </div>
+
+            {% if workout.comment %}
+            <p style="margin: 8px 0 0 0; color: var(--muted); font-size: 0.95rem; font-style: italic; width: 100%; word-wrap: break-word;">{{ workout.comment }}</p>
+            {% endif %}
+          </div>
+        </button>
+      </form>
+      {% empty %}
+      <div style="text-align: center; padding: 40px 20px;">
+        <p style="color: var(--muted); font-size: 1.1rem;">Még nincsenek előző edzések.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</main>
+
+{% endblock %}

@@ -12,6 +12,13 @@ def choose(request):
 
 def new(request, workout_id):
     if request.method == 'POST':
+        is_active = request.POST.get('is_active') == 'true'
+        save_id = int(request.POST.get('save_id', 0))
+        
+        # Mentsd el a session-be
+        request.session['is_active'] = is_active
+        request.session['save_id'] = save_id
+        
         excercises = Excercises.objects.filter(workoutid_id=workout_id)
         for excercise in excercises:
             weight_value = request.POST.get(f'weight_{excercise.id}')
@@ -24,14 +31,18 @@ def new(request, workout_id):
                 )
                 weight.save()
         return redirect('start', workout_id=workout_id)
-    weights = Weights.objects.filter(workoutid_id=workout_id, userid=request.user)
+    
+    weight_objs = Weights.objects.filter(workoutid_id=workout_id, userid=request.user)
     display_excercises = Excercises.objects.filter(workoutid_id=workout_id)
-    if not weights.exists():
+    if not weight_objs.exists():
         return render(request, 'new_plan.html', {'excercises': display_excercises, 'workout_id': workout_id})
     else:
         return redirect('start', workout_id=workout_id)
 
 def start(request, workout_id):
+    is_active = request.session.get('is_active', False)
+    save_id = request.session.get('save_id', 0)
+    
     if request.method == 'POST':
         excercises = Excercises.objects.filter(workoutid_id=workout_id)
         elapsed_time = request.POST.get('elapsed_time', 0)
@@ -48,18 +59,44 @@ def start(request, workout_id):
                 weight_obj.weight = float(new_weight_value)
                 weight_obj.save()
         
-        workout_record = PreviousWorkouts(
-            userid=request.user,
-            workout_type=CreatedWorkouts.objects.get(id=workout_id).name,
-            timer=int(elapsed_time),
-            comment = comment # Placeholder comment
-        )
-        workout_record.save()
+        if is_active:
+            previous_workout = PreviousWorkouts.objects.get(userid=request.user, workout_id=workout_id, id=save_id)
+            previous_workout.timer = elapsed_time
+            if comment != None:
+                previous_workout.comment = comment
+            else:
+                previous_workout.comment = previous_workout.comment
+            previous_workout.save()
+        else:
+            previous_workout = PreviousWorkouts(
+                userid=request.user,
+                workout=CreatedWorkouts.objects.get(id=workout_id),
+                timer=elapsed_time,
+                comment=comment
+            )
+            previous_workout.save()
         return redirect('home')
     else:
         weights = Weights.objects.filter(workoutid_id=workout_id, userid=request.user)
         if not weights.exists():
             return redirect('new', workout_id=workout_id)
         else:
-            excercises = Excercises.objects.filter(workoutid_id=workout_id)
-            return render(request, 'workout.html', {'excercises': excercises, 'weights': weights, 'workout_id': workout_id})
+            if is_active:
+                previous_workout = PreviousWorkouts.objects.get(userid=request.user, workout_type_id=workout_id, id=save_id)
+                return render(request, 'workout.html', {'excercises': Excercises.objects.filter(workoutid_id=workout_id), 'weights': weights, 'workout_id': workout_id, 'timer': previous_workout.timer, 'comment': previous_workout.comment})
+            else:
+                excercises = Excercises.objects.filter(workoutid_id=workout_id)
+                return render(request, 'workout.html', {'excercises': excercises, 'weights': weights, 'workout_id': workout_id, 'timer': 0, 'comment': ''})
+
+def previous(request):
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'load_workout':
+            workout_type_id = request.POST.get('workout_type_id')
+            if workout_type_id:
+                request.session['is_active'] = request.POST.get('is_active') == 'true'
+                request.session['save_id'] = request.POST.get('save_id')
+                return redirect('new', workout_id=int(workout_type_id))
+    
+    previous_workouts = PreviousWorkouts.objects.filter(userid=request.user)
+    return render(request, 'previous.html', {'previous_workouts': previous_workouts})
