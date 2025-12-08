@@ -90,13 +90,10 @@ def start(request, workout_id):
 
 def previous(request):
     if request.method == 'POST':
-        action = request.POST.get('action')
-        if action == 'load_workout':
-            workout_type_id = request.POST.get('workout_type_id')
-            if workout_type_id:
-                request.session['is_active'] = request.POST.get('is_active') == 'true'
-                request.session['save_id'] = request.POST.get('save_id')
-                return redirect('new', workout_id=int(workout_type_id))
+        workout_type_id = request.POST.get('workout_type_id')
+        request.session['is_active'] = request.POST.get('is_active') == 'true'
+        request.session['save_id'] = request.POST.get('save_id')
+        return redirect('new', workout_id=int(workout_type_id))
     
     previous_workouts = PreviousWorkouts.objects.filter(userid=request.user)
     return render(request, 'previous.html', {'previous_workouts': previous_workouts})
