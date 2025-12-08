@@ -60,13 +60,13 @@ def start(request, workout_id):
                 weight_obj.save()
         
         if is_active:
+            
             previous_workout = PreviousWorkouts.objects.get(userid=request.user, workout_id=workout_id, id=save_id)
             previous_workout.timer = elapsed_time
-            if comment != None:
+            if comment:
                 previous_workout.comment = comment
-            else:
-                previous_workout.comment = previous_workout.comment
             previous_workout.save()
+            
         else:
             previous_workout = PreviousWorkouts(
                 userid=request.user,
@@ -82,7 +82,7 @@ def start(request, workout_id):
             return redirect('new', workout_id=workout_id)
         else:
             if is_active:
-                previous_workout = PreviousWorkouts.objects.get(userid=request.user, workout_type_id=workout_id, id=save_id)
+                previous_workout = PreviousWorkouts.objects.get(userid=request.user, workout_id=workout_id, id=save_id)
                 return render(request, 'workout.html', {'excercises': Excercises.objects.filter(workoutid_id=workout_id), 'weights': weights, 'workout_id': workout_id, 'timer': previous_workout.timer, 'comment': previous_workout.comment})
             else:
                 excercises = Excercises.objects.filter(workoutid_id=workout_id)
@@ -92,8 +92,12 @@ def previous(request):
     if request.method == 'POST':
         workout_type_id = request.POST.get('workout_type_id')
         request.session['is_active'] = request.POST.get('is_active') == 'true'
-        request.session['save_id'] = request.POST.get('save_id')
+        request.session['save_id'] = int(request.POST.get('save_id', 0))  # Konvertáld int-re
         return redirect('new', workout_id=int(workout_type_id))
     
     previous_workouts = PreviousWorkouts.objects.filter(userid=request.user)
     return render(request, 'previous.html', {'previous_workouts': previous_workouts})
+
+def delete(request, workout_id):
+    PreviousWorkouts.objects.filter(userid=request.user, id=workout_id).delete()
+    return redirect('previous')

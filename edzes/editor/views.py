@@ -4,10 +4,13 @@ from django.http import HttpResponse
 
 
 def editor_home(request):
-    return HttpResponse("Editor Home Page")
+    return render(request, 'editor_home.html')
 
 def create_workout(request):
     return HttpResponse("Create Workout Page")
 
 def edit_workout(request, workout_id):
     return HttpResponse(f"Edit Workout Page for workout ID: {workout_id}")
+
+def my_workouts(request):
+    return HttpResponse("My Workouts Page")

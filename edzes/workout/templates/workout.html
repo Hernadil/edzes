@@ -27,7 +27,7 @@
       </div>
 
       <!-- Gyakorlatok táblázat -->
-      <form method="post" action="{% url 'start' workout_id=workout_id %}">
+      <form method="post" action="{% url 'start' workout_id=workout_id %}" id="workoutForm">
         {% csrf_token %}
         <input type="hidden" name="elapsed_time" id="elapsed-time-input" />
 
@@ -171,7 +171,8 @@
           </div>
 
           <button
-            type="submit"
+            type="button"
+            onclick="showFinishModal()"
             class="btn form-btn"
             style="margin-top: 32px; width: 100%"
           >
@@ -180,15 +181,16 @@
         </div>
         <div style="text-align: center; margin-top: 24px;">
           <button
-            type="submit"
+            type="button"
             name="action"
             value="back_home"
+            onclick="showBackHomeModal()"
             class="btn form-btn"
             style="width: 100%; max-width: 300px; margin: 0 auto;"
           >
             Vissza a főoldalra
           </button>
-        </div>  
+        </div>    
         
       </form>
       
@@ -197,6 +199,38 @@
     </div>
   </section>
 </main>
+
+<!-- Finish Workout Modal -->
+<div id="finishModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; align-items: center; justify-content: center;">
+  <div style="background: var(--bg-secondary); border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+    <h3 style="color: var(--white); margin: 0 0 16px 0; font-size: 1.5rem; text-align: center;">Edzés befejezése</h3>
+    <p style="color: var(--muted); margin: 0 0 24px 0; text-align: center; line-height: 1.5;">Biztosan be szeretnéd fejezni az edzést?</p>
+    <div style="display: flex; gap: 12px; justify-content: center;">
+      <button onclick="closeFinishModal()" style="background: var(--bg-primary); color: var(--white); border: 2px solid var(--muted); border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background='var(--bg-primary)'">
+        Mégse
+      </button>
+      <button onclick="confirmFinish()" style="background: var(--accent); color: white; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        Befejezés
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Back Home Modal -->
+<div id="backHomeModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; align-items: center; justify-content: center;">
+  <div style="background: var(--bg-secondary); border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+    <h3 style="color: var(--white); margin: 0 0 16px 0; font-size: 1.5rem; text-align: center;">Vissza a főoldalra</h3>
+    <p style="color: var(--muted); margin: 0 0 24px 0; text-align: center; line-height: 1.5;">Biztosan vissza szeretnél menni a főoldalra? Az edzés folytatódni fog.</p>
+    <div style="display: flex; gap: 12px; justify-content: center;">
+      <button onclick="closeBackHomeModal()" style="background: var(--bg-primary); color: var(--white); border: 2px solid var(--muted); border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background='var(--bg-primary)'">
+        Mégse
+      </button>
+      <button onclick="confirmBackHome()" style="background: var(--accent); color: white; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        Vissza
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
   // Django változóból mentett idő (percben) - biztonságos parseInt
@@ -222,6 +256,47 @@
 
   timerInterval = setInterval(updateTimer, 1000);
   updateTimer();
+
+  // Finish Modal Functions
+  function showFinishModal() {
+    document.getElementById('finishModal').style.display = 'flex';
+  }
+
+  function closeFinishModal() {
+    document.getElementById('finishModal').style.display = 'none';
+  }
+
+  function confirmFinish() {
+    document.getElementById('workoutForm').submit();
+  }
+
+  // Back Home Modal Functions
+  function showBackHomeModal() {
+    document.getElementById('backHomeModal').style.display = 'flex';
+  }
+
+  function closeBackHomeModal() {
+    document.getElementById('backHomeModal').style.display = 'none';
+  }
+
+  function confirmBackHome() {
+    const form = document.getElementById('workoutForm');
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'action';
+    input.value = 'back_home';
+    form.appendChild(input);
+    form.submit();
+  }
+
+  // Modal háttér kattintás
+  document.getElementById('finishModal').addEventListener('click', function(e) {
+    if (e.target === this) closeFinishModal();
+  });
+
+  document.getElementById('backHomeModal').addEventListener('click', function(e) {
+    if (e.target === this) closeBackHomeModal();
+  });
 </script>
 
 {% endblock %}
