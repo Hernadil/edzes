@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from home.models import CreatedWorkouts, Excercises
 # Create your views here.
 
 
@@ -13,4 +14,10 @@ def edit_workout(request, workout_id):
     return HttpResponse(f"Edit Workout Page for workout ID: {workout_id}")
 
 def my_workouts(request):
-    return HttpResponse("My Workouts Page")
+    workouts = CreatedWorkouts.objects.filter(userid=request.user)
+    return render(request, 'my_workouts.html', {'workouts': workouts})
+
+
+def delete_workout(request, workout_id):
+    CreatedWorkouts.objects.filter(userid=request.user, id=workout_id).delete()
+    return redirect('my_workouts')
