@@ -21,29 +21,17 @@
         <!-- Jobb oldal: korábbi edzések + egyéb -->
         <aside class="right-col">
           <button onclick="window.location.href='{% url 'previous' %}'" class="pill-btn fullwidth">Naplózott edzések megtekintése</button>
-          
-          <div class="stack-cards">
-            <div class="card small">
-              <div class="small-left">
-                <h3 class="small-title">Edzésterv készítése</h3>
-                <p class="muted tiny">Tervezd meg a megfelelő edzésedet</p>
-              </div>
-              <div class="small-action">
-                <button onclick="window.location.href='{% url 'editor' %}'" class="btn">Készítés</button>
-              </div>
-            </div>
+      
 
-            {% if my %}
             <div class="card small">
               <div class="small-left">
                 <h3 class="small-title">Saját edzésterveim</h3>
                 <p class="muted tiny">Mentett, személyes edzéseid</p>
               </div>
               <div class="small-action">
-                <a href="{% url 'choose' %}"><button class="btn">Megnyitás</button></a>
+                <a href="{% url 'editor' %}"><button class="btn">Megnyitás</button></a>
               </div>
             </div>
-            {% endif %}
           </div>
         </aside>
       </div>

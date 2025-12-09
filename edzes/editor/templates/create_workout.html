@@ -1,0 +1,83 @@
+{% extends 'main.html' %} {% block content %}
+
+<main class="page-wrap">
+  <section class="home-panel">
+    <div class="workouts-container" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px;">
+      <h2 style="color: var(--white); margin-bottom: 24px;">Új edzésterv létrehozása</h2>
+      
+      <form id="createWorkoutForm" method="POST" action="{% url 'create_workout' %}">
+        {% csrf_token %}
+        
+        <div class="card big" style="width: 100%; padding: 28px; display: flex; flex-direction: column; gap: 16px;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="color: var(--muted); font-weight: 700; font-size: 0.9rem;">Edzésterv neve</label>
+            <input 
+              type="text" 
+              id="workout_name" 
+              name="workout_name" 
+              placeholder="pl. Mellizmom erősítés"
+              style="width: 100%; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--white); font-size: 1rem;" 
+              required
+            />
+          </div>
+        </div>
+        
+        <button type="button" onclick="showCreateModal()" class="btn form-btn" style="width: 100%; margin-top: 24px; padding: 14px 24px;">
+          Edzésterv létrehozása
+        </button>
+      </form>
+      
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="{% url 'editor' %}" style="color: var(--accent); text-decoration: none; font-weight: 600;">Vissza a szerkesztőhöz</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Create Confirmation Modal -->
+<div id="createModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; align-items: center; justify-content: center;">
+  <div style="background: var(--bg-secondary); border-radius: 16px; padding: 32px; max-width: 400px; width: 90%; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);">
+    <h3 style="color: var(--white); margin: 0 0 16px 0; font-size: 1.5rem; text-align: center;">Edzésterv létrehozása</h3>
+    <p style="color: var(--muted); margin: 0 0 24px 0; text-align: center; line-height: 1.5;">Biztosan szeretnéd létrehozni ezt az edzéstervet? Később bármikor hozzáadhat gyakorlatokat.</p>
+    <div style="display: flex; gap: 12px; justify-content: center;">
+      <button onclick="closeCreateModal()" style="background: var(--bg-primary); color: var(--white); border: 2px solid var(--muted); border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background='var(--bg-primary)'">
+        Mégse
+      </button>
+      <button onclick="confirmCreate()" style="background: var(--accent); color: white; border: none; border-radius: 8px; padding: 12px 24px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+        Létrehozás
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+function showCreateModal() {
+  const workoutName = document.getElementById('workout_name').value.trim();
+  
+  if (!workoutName) {
+    alert('Kérlek add meg az edzésterv nevét!');
+    return;
+  }
+  
+  const modal = document.getElementById('createModal');
+  modal.style.display = 'flex';
+}
+
+function closeCreateModal() {
+  const modal = document.getElementById('createModal');
+  modal.style.display = 'none';
+}
+
+function confirmCreate() {
+  document.getElementById('createWorkoutForm').submit();
+}
+
+// Kattintás a modal háttérre is bezárja
+document.getElementById('createModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeCreateModal();
+  }
+});
+</script>
+
+{% endblock %}
