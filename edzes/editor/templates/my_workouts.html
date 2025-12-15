@@ -3,7 +3,18 @@
 <main class="page-wrap">
   <section class="home-panel">
     <div class="workouts-container" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px;">
-      <h2 style="color: var(--white); margin-bottom: 24px;">Eddigi edzésterveim</h2>
+      <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 24px; position: relative;">
+        <a href="{% url 'redirectview' 'editor' %}" style="position: absolute; left: 0; text-decoration: none;">
+          <button type="button" style="background: var(--bg-secondary); color: var(--white); border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; gap: 8px;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--bg-secondary)'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Vissza
+          </button>
+        </a>
+        <h2 style="color: var(--white); margin: 0;">Eddigi edzésterveim</h2>
+      </div>
       
       {% for workout in workouts %}
       <div style="position: relative;">

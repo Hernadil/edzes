@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import CreatedWorkouts
@@ -15,3 +15,6 @@ def homepage(request):
     if myworkouts.exists():
         my = True
     return render(request, "homepage.html", {"all": all, "my": my})
+
+def redirectview(request, view_name):
+    return redirect(view_name)
