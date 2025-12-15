@@ -1,0 +1,16 @@
+{
+  "name": "Edzésterv",
+  "short_name": "Edzes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6ccfc0",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/128/10005/10005062.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    
+  ]
+}
