@@ -4,7 +4,7 @@
   <section class="home-panel">
     <div
       class="workout-session"
-      style="max-width: 900px; margin: 0 auto; padding: 20px"
+      style="width: 100%; margin: 0 auto; padding: 20px"
     >
       <!-- Időmérő -->
       <div
@@ -38,107 +38,33 @@
         <div class="card big" style="padding: 32px">
           <h2 style="margin: 0 0 24px 0; color: var(--white)">Gyakorlatok</h2>
 
-          <div class="exercises-table" style="width: 100%; overflow-x: auto">
-            <table style="width: 100%; border-collapse: collapse">
-              <thead>
-                <tr style="border-bottom: 2px solid rgba(255, 255, 255, 0.1)">
-                  <th
-                    style="
-                      padding: 16px;
-                      text-align: left;
-                      color: var(--muted);
-                      font-weight: 700;
-                      font-size: 0.9rem;
-                    "
-                  >
-                    Gyakorlat
-                  </th>
-                  <th
-                    style="
-                      padding: 16px;
-                      text-align: center;
-                      color: var(--muted);
-                      font-weight: 700;
-                      font-size: 0.9rem;
-                    "
-                  >
-                    Ismétlések
-                  </th>
-                  <th
-                    style="
-                      padding: 16px;
-                      text-align: center;
-                      color: var(--muted);
-                      font-weight: 700;
-                      font-size: 0.9rem;
-                    "
-                  >
-                    Jelenlegi súly (kg)
-                  </th>
-                  <th
-                    style="
-                      padding: 16px;
-                      text-align: center;
-                      color: var(--muted);
-                      font-weight: 700;
-                      font-size: 0.9rem;
-                    "
-                  >
-                    Új súly (kg)
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for excercise in excercises %}
-                  {% for weight in weights %}
-                    {% if weight.excerciseid.id == excercise.id %}
-                    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05)">
-                      <td
-                        data-label=""
-                        style="
-                          padding: 20px;
-                          color: var(--white);
-                          font-weight: 600;
-                          font-size: 1.1rem;
-                        "
-                      >
-                        {{ excercise.name }}
-                      </td>
-                      <td
-                        data-label="Ismétlések"
-                        style="
-                          padding: 20px;
-                          text-align: center;
-                          color: var(--white);
-                          font-size: 1rem;
-                        "
-                      >
-                        {{ excercise.reps }}
-                      </td>
-                      <td
-                        data-label="Jelenlegi súly"
-                        style="
-                          padding: 20px;
-                          text-align: center;
-                          color: var(--accent);
-                          font-weight: 700;
-                          font-size: 1.1rem;
-                        "
-                      >
-                        {{ weight.weight }}
-                      </td>
-                      <td
-                        data-label="Új súly (kg)"
-                        style="padding: 20px; text-align: center"
-                      >
+          <div class="exercises-list" style="display: flex; flex-direction: column; gap: 20px">
+            {% for excercise in excercises %}
+              {% for weight in weights %}
+                {% if weight.excerciseid.id == excercise.id %}
+                <div class="practice-card" data-exercise-id="{{ excercise.id }}" style="
+                  padding: 24px;
+                  background: rgba(255, 255, 255, 0.03);
+                  border: 1px solid rgba(255, 255, 255, 0.1);
+                  border-radius: 12px;
+                  transition: all 0.3s;
+                ">
+                  <!-- Header: név és súly input -->
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 16px;">
+                    <div style="flex: 1;">
+                      <h3 style="margin: 0 0 12px 0; color: var(--white); font-size: 1.5rem; font-weight: 700;">{{ excercise.name }}</h3>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <label style="color: var(--muted); font-weight: 700; font-size: 0.9rem;">Súly (kg):</label>
                         <input
                           type="number"
                           name="new_weight_{{ excercise.id }}"
+                          class="weight-input"
+                          data-exercise-id="{{ excercise.id }}"
                           value="{{ weight.weight }}"
                           min="0"
                           step="0.5"
                           style="
-                            width: 80px;
+                            width: 100px;
                             padding: 8px 12px;
                             background: rgba(255, 255, 255, 0.05);
                             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -149,19 +75,49 @@
                             font-weight: 600;
                           "
                         />
-                      </td>
-                    </tr>
-                    {% endif %}
-                  {% endfor %}
-                {% empty %}
-                  <div style="text-align: center; padding: 40px 20px">
-                    <p style="color: var(--muted); font-size: 1.1rem">
-                      Még nincsenek gyakorlatok hozzáadva ehhez az edzéshez.
-                    </p>
+                      </div>
+                    </div>
                   </div>
-                {% endfor %}
-              </tbody>
-            </table>
+
+                  <!-- Sets lista -->
+                  <div class="practice-sets" style="display: flex; flex-direction: column; gap: 12px;">
+                    {% for set_num in "x"|rjust:excercise.sets %}
+                      <div class="set-item" data-exercise-id="{{ excercise.id }}" data-set-num="{{ forloop.counter }}" onclick="toggleSetCheckbox({{ excercise.id }}, {{ forloop.counter }})" style="
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        background: rgba(255, 255, 255, 0.02);
+                        border-radius: 8px;
+                        transition: all 0.2s;
+                        cursor: pointer;
+                      ">
+                        <input
+                          type="checkbox"
+                          class="set-checkbox"
+                          data-exercise-id="{{ excercise.id }}"
+                          data-set-num="{{ forloop.counter }}"
+                          onchange="updateSetStatus({{ excercise.id }}, {{ forloop.counter }})"
+                          style="
+                            display: none;
+                          "
+                        />
+                        <span style="color: var(--white); font-weight: 600; flex: 1;">
+                          {{ excercise.reps }}   ismétlés
+                        </span>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% empty %}
+              <div style="text-align: center; padding: 40px 20px">
+                <p style="color: var(--muted); font-size: 1.1rem">
+                  Még nincsenek gyakorlatok hozzáadva ehhez az edzéshez.
+                </p>
+              </div>
+            {% endfor %}
           </div>
 
           <div
@@ -395,7 +351,13 @@
 <script>
   // Django változóból mentett idő (percben) - biztonságos parseInt
   let savedMinutes = parseInt("{{ timer|default:'0' }}") || 0;
+  let workoutId = {{ workout_id }};
+  let saveInterval;
+  let completedSets = {}; // { exerciseId: Set(setNumbers) }
 
+  // Betölt az elmentett szetteket
+  let savedCompletedSets = {{ completed_sets|safe }};
+  
   // Számold vissza a startTime-ot, hogy onnan induljon
   let startTime = Date.now() - savedMinutes * 60 * 1000;
   let timerInterval;
@@ -414,8 +376,152 @@
     document.getElementById("elapsed-time-input").value = minutes;
   }
 
+  function toggleSetCheckbox(exerciseId, setNum) {
+    const checkbox = document.querySelector(
+      `.set-checkbox[data-exercise-id="${exerciseId}"][data-set-num="${setNum}"]`
+    );
+    checkbox.checked = !checkbox.checked;
+    updateSetStatus(exerciseId, setNum);
+  }
+
+  function updateSetStatus(exerciseId, setNum) {
+    if (!completedSets[exerciseId]) {
+      completedSets[exerciseId] = new Set();
+    }
+
+    const checkbox = document.querySelector(
+      `.set-checkbox[data-exercise-id="${exerciseId}"][data-set-num="${setNum}"]`
+    );
+    const setItem = document.querySelector(
+      `.set-item[data-exercise-id="${exerciseId}"][data-set-num="${setNum}"]`
+    );
+
+    if (checkbox.checked) {
+      completedSets[exerciseId].add(setNum);
+      setItem.style.opacity = '0.6';
+      setItem.style.textDecoration = 'line-through';
+    } else {
+      completedSets[exerciseId].delete(setNum);
+      setItem.style.opacity = '1';
+      setItem.style.textDecoration = 'none';
+    }
+
+    // Frissítsd az gyakorlat kártyát
+    const exerciseCard = document.querySelector(
+      `.practice-card[data-exercise-id="${exerciseId}"]`
+    );
+    const totalSets = document.querySelectorAll(
+      `.set-item[data-exercise-id="${exerciseId}"]`
+    ).length;
+
+    if (completedSets[exerciseId].size === totalSets && totalSets > 0) {
+      // Az összes szett kész - szürkítsd meg a szériákat
+      exerciseCard.style.opacity = '0.7';
+      exerciseCard.style.backgroundColor = 'rgba(100, 116, 139, 0.3)';
+    } else {
+      // Nem az összes szett kész - normális megjelenés
+      exerciseCard.style.opacity = '1';
+      exerciseCard.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
+    }
+
+    // Frissítsd a kész gomb állapotát
+    updateCompleteButtonState(exerciseId);
+  }
+
+  function updateCompleteButtonState(exerciseId) {
+    const weightInput = document.querySelector(`input[name="new_weight_${exerciseId}"]`);
+    const totalSets = document.querySelectorAll(
+      `.set-item[data-exercise-id="${exerciseId}"]`
+    ).length;
+
+    if (!completedSets[exerciseId]) {
+      completedSets[exerciseId] = new Set();
+    }
+
+    if (completedSets[exerciseId].size === totalSets && totalSets > 0) {
+      // Az összes szett kész - input inaktív
+      weightInput.disabled = true;
+      weightInput.style.opacity = '0.5';
+      weightInput.style.cursor = 'not-allowed';
+    } else {
+      // Nem az összes szett kész - input aktív
+      weightInput.disabled = false;
+      weightInput.style.opacity = '1';
+      weightInput.style.cursor = 'text';
+    }
+  }
+
+  function saveWorkoutProgress() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const minutes = Math.floor(elapsed / 60);
+    const comment = document.getElementById("notes").value;
+
+    // Gyűjts össze minden súlyértéket
+    const weights = {};
+    const inputs = document.querySelectorAll('input[name^="new_weight_"]');
+    inputs.forEach(input => {
+      const exerciseId = input.name.replace('new_weight_', '');
+      weights[exerciseId] = input.value;
+    });
+
+    // Konvertáld a completedSets Set-jeit tömbökké
+    const completedSetsToSend = {};
+    for (let exerciseId in completedSets) {
+      completedSetsToSend[exerciseId] = Array.from(completedSets[exerciseId]);
+    }
+
+    // AJAX kérés a szerver felé
+    fetch(`/workout/save_progress/${workoutId}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+      },
+      body: JSON.stringify({
+        elapsed_time: minutes,
+        comment: comment,
+        weights: weights,
+        completed_sets: completedSetsToSend
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status !== 'success') {
+        console.error('Hiba az adatok mentésekor:', data.message);
+      }
+    })
+    .catch(error => console.error('AJAX hiba:', error));
+  }
+
   timerInterval = setInterval(updateTimer, 1000);
+  // Percenként mentsd az adatokat
+  saveInterval = setInterval(saveWorkoutProgress, 60000);
   updateTimer();
+
+  // Betöltéskor állítsd vissza az elmentett szetteket
+  if (savedCompletedSets && Object.keys(savedCompletedSets).length > 0) {
+    for (let exerciseId in savedCompletedSets) {
+      completedSets[exerciseId] = new Set(savedCompletedSets[exerciseId]);
+      
+      // Bejelöld a checkboxokat
+      savedCompletedSets[exerciseId].forEach(setNum => {
+        const checkbox = document.querySelector(
+          `.set-checkbox[data-exercise-id="${exerciseId}"][data-set-num="${setNum}"]`
+        );
+        if (checkbox) {
+          checkbox.checked = true;
+          updateSetStatus(exerciseId, setNum);
+        }
+      });
+    }
+  }
+
+  // Input változáskor azonnal mentsd a súlyokat és kommentet
+  document.querySelectorAll('input[name^="new_weight_"]').forEach(input => {
+    input.addEventListener('input', saveWorkoutProgress);
+  });
+
+  document.getElementById("notes").addEventListener('input', saveWorkoutProgress);
 
   // Finish Modal Functions
   function showFinishModal() {
@@ -427,6 +533,11 @@
   }
 
   function confirmFinish() {
+    // Utolsó mentés előtt az oldal bezárása előtt
+    saveWorkoutProgress();
+    // Tisztítsd fel az intervallumokat
+    clearInterval(timerInterval);
+    clearInterval(saveInterval);
     document.getElementById("workoutForm").submit();
   }
 
@@ -440,13 +551,10 @@
   }
 
   function confirmBackHome() {
-    const form = document.getElementById("workoutForm");
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = "action";
-    input.value = "back_home";
-    form.appendChild(input);
-    form.submit();
+    // Utolsó mentés
+    saveWorkoutProgress();
+    // Vissza a főoldalra (session megmarad)
+    window.location.href = '/';
   }
 
   // Modal háttér kattintás
@@ -461,6 +569,35 @@
     .addEventListener("click", function (e) {
       if (e.target === this) closeBackHomeModal();
     });
+
+  // Oldal elhagyása előtt mentsd az adatokat
+  window.addEventListener('beforeunload', function() {
+    saveWorkoutProgress();
+  });
+
+  // Media query: telefonos nézet
+  const style = document.createElement('style');
+  style.textContent = `
+    input[type="checkbox"].set-checkbox:checked {
+      accent-color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .complete-btn {
+        padding: 6px 10px !important;
+        font-size: 0.8rem !important;
+      }
+      
+      .practice-card {
+        padding: 16px !important;
+      }
+      
+      h3 {
+        font-size: 1.2rem !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 </script>
 
 {% endblock %}

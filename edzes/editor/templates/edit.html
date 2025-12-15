@@ -3,9 +3,9 @@
 <main class="page-wrap">
   <section class="home-panel">
     <div class="workouts-container" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 700px; margin: 0 auto; padding: 0 20px;">
-      <div style="display: flex; align-items: center; margin-bottom: 24px; gap: 12px;">
+      <div class="header-with-back">
         <a href="{% url 'redirectview' 'my_workouts' %}" style="text-decoration: none;">
-          <button type="button" style="background: var(--bg-secondary); color: var(--white); border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; gap: 8px;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--bg-secondary)'">
+          <button type="button" style="background: var(--bg-secondary); color: var(--white); border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; gap: 8px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
@@ -18,6 +18,14 @@
       
       <form method="post" action="{% url 'edit_workout' workout_id %}" id="workoutForm">
         {% csrf_token %}
+        
+        <!-- Edzésterv nevének szerkesztése -->
+        <div class="card big" style="width: 100%; padding: 28px; display: flex; flex-direction: column; gap: 16px; margin-bottom: 12px;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="color: var(--muted); font-weight: 700; font-size: 0.9rem;">Edzésterv neve</label>
+            <input type="text" name="workout_name" value="{{ workout.name }}" style="width: 100%; padding: 10px 14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: var(--white); font-size: 1rem;" required />
+          </div>
+        </div>
         
         <!-- Meglévő feladatok -->
         <div id="existing-excercises">

@@ -16,17 +16,25 @@
 
 /* RESET / ALAPOK */
 *{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
+html,body{
+  height:100%;
+  margin: 0;
+  padding: 0;
+}
+html{
   background:
     radial-gradient(1200px 400px at 10% 10%, rgba(255,255,255,0.01), transparent 6%),
-    linear-gradient(180deg, #070707 0%, var(--bg) 40%);
+    linear-gradient(180deg, #070707 0%, var(--bg) 100%);
+}
+body{
+  background: transparent;
   color:var(--white);
   font-family: "Montserrat", "Inter", Arial, sans-serif;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   line-height:1.4;
+  display: flex;
+  flex-direction: column;
 }
 
 /* TOPBAR (keskeny, modern) */
@@ -70,13 +78,14 @@ body{
   display:flex;
   align-items:flex-start;
   justify-content:center;
-  padding:34px 20px 80px;
+  padding:34px 20px 20px;
+  max-width:100%;
 }
 
 /* HOME PANEL: nagy, modern, sötét kártya */
 .home-panel{
   width:100%;
-  max-width:1200px;
+  max-width:1600px;
   display:flex;
   justify-content:center;
   align-items:flex-start;
@@ -86,6 +95,56 @@ body{
   display:grid;
   grid-template-columns: 1fr 380px;
   gap:28px;
+}
+
+/* Header with back button - mobile responsive */
+.header-with-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.header-with-back button {
+  background: var(--bg-secondary);
+  transition: background 0.2s;
+}
+
+.header-with-back button:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .header-with-back button {
+    background: var(--accent) !important;
+  }
+  
+  .header-with-back button:hover {
+    background: var(--accent) !important;
+  }
+}
+
+/* Editor home back button */
+.editor-home-back-button {
+  background: var(--bg-secondary);
+  transition: background 0.2s;
+}
+
+.editor-home-back-button:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .editor-home-back-button {
+    background: var(--accent) !important;
+  }
+  
+  .editor-home-back-button:hover {
+    background: var(--accent) !important;
+  }
 }
 
 /* BAL OSZLOP - nagy card */

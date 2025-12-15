@@ -28,7 +28,13 @@ def create_workout(request):
 
 def edit_workout(request, workout_id):
     if request.method == 'POST':
-        workout = CreatedWorkouts.objects.get(id=workout_id, userid=request.user)
+        workout = CreatedWorkouts.objects.get(id=workout_id, userid=request.user)        
+        # Edzésterv nevének frissítése
+        workout_name = request.POST.get('workout_name', '').strip()
+        if workout_name:
+            workout.name = workout_name
+            workout.save()
+        
         excercises = Excercises.objects.filter(workoutid_id=workout_id)
         
         # Meglévő feladatok frissítése
@@ -65,8 +71,9 @@ def edit_workout(request, workout_id):
         
         return redirect('my_workouts')
     else:
+        workout = CreatedWorkouts.objects.get(id=workout_id, userid=request.user)
         exc = Excercises.objects.filter(workoutid_id=workout_id)
-        return render(request, 'edit.html', {'workout_id': workout_id, 'excercises': exc})
+        return render(request, 'edit.html', {'workout_id': workout_id, 'workout': workout, 'excercises': exc})
     
 
 def my_workouts(request):

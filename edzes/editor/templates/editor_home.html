@@ -4,13 +4,16 @@
 <main class="page-wrap">
   <section class="home-panel">
     <div style="max-width: 600px; margin: 0 auto; padding: 40px 20px;">
-      <h1 style="color: var(--white); text-align: center; margin: 0 0 48px 0; font-size: 2.5rem; font-weight: 900;">
-        Edzésterv Szerkesztő
-      </h1>
+      <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 48px; position: relative;">
+        
+        <h1 style="color: var(--white); text-align: center; margin: 0; font-size: 2.5rem; font-weight: 900;">
+          Edzésterv Szerkesztő
+        </h1>
+      </div>
 
       <div style="display: flex; flex-direction: column; gap: 20px; align-items: center;">
         <a href="{% url 'create_workout' %}" style="text-decoration: none; width: 100%; max-width: 400px;">
-          <button class="card big" style="width: 100%; min-height: 140px; padding: 32px; text-align: center; border: none; background: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+          <button class="card big" style="width: 100%; min-height: 140px; padding: 32px; text-align: center; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; border: 2px solid rgba(158,27,27,0.5); border-radius: 12px; box-shadow: 0 0 20px rgba(158,27,27,0.3);" onmouseover="this.style.boxShadow='0 0 40px rgba(158,27,27,0.7), inset 0 0 20px rgba(158,27,27,0.2)'; this.style.borderColor='rgba(158,27,27,0.8)';" onmouseout="this.style.boxShadow='0 0 20px rgba(158,27,27,0.3)'; this.style.borderColor='rgba(158,27,27,0.5)';">
             <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -27,7 +30,7 @@
         </a>
 
         <a href="{% url 'my_workouts' %}" style="text-decoration: none; width: 100%; max-width: 400px;">
-          <button class="card big" style="width: 100%; min-height: 140px; padding: 32px; text-align: center; border: none; background: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+          <button class="card big" style="width: 100%; min-height: 140px; padding: 32px; text-align: center; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; border: 2px solid rgba(158,27,27,0.5); border-radius: 12px; box-shadow: 0 0 20px rgba(158,27,27,0.3);" onmouseover="this.style.boxShadow='0 0 40px rgba(158,27,27,0.7), inset 0 0 20px rgba(158,27,27,0.2)'; this.style.borderColor='rgba(158,27,27,0.8)';" onmouseout="this.style.boxShadow='0 0 20px rgba(158,27,27,0.3)'; this.style.borderColor='rgba(158,27,27,0.5)';">
             <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -47,10 +50,10 @@
         </a>
       </div>
 
-      <div style="margin-top: 48px; text-align: center;">
-        <a href="{% url 'redirectview' 'home' %}" style="text-decoration: none;">
-          <button type="button" style="background: var(--bg-secondary); color: var(--white); border: none; border-radius: 8px; padding: 10px 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; gap: 8px;" onmouseover="this.style.background='var(--accent)'" onmouseout="this.style.background='var(--bg-secondary)'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div style="margin-top: 48px; display: flex; flex-direction: column; gap: 20px; align-items: center;">
+        <a href="{% url 'redirectview' 'home' %}" style="text-decoration: none; width: 100%; max-width: 400px;">
+          <button type="button" class="editor-home-back-button" style="width: 100%; padding: 20px; color: var(--white); border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.2rem; font-weight: 600;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>

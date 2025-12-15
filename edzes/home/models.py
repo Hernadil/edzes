@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+import json
+
 # Create your models here.
 
 class CreatedWorkouts(models.Model):
@@ -24,3 +26,4 @@ class PreviousWorkouts(models.Model):
     date = models.DateField(auto_now=True)
     timer = models.IntegerField()
     comment = models.CharField(max_length=200)
+    completed_sets = models.TextField(default='{}')  # JSON formátumban tárolt szetteket
