@@ -496,6 +496,8 @@
   timerInterval = setInterval(updateTimer, 1000);
   // Percenként mentsd az adatokat
   saveInterval = setInterval(saveWorkoutProgress, 60000);
+  // Azonnal futtasd le az első mentést az oldal betöltésekor
+  saveWorkoutProgress();
   updateTimer();
 
   // Betöltéskor állítsd vissza az elmentett szetteket
